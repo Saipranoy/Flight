@@ -1,0 +1,136 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PDG Flights: emergency rules flowchart</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet"><style>
+:root{--primary:#E4F222;--on-primary:#1A1919;--primary-text:#5A6200;--background:#F4F2EE;--surface:#FFFFFF;--text:#1A1919;--text-muted:#5F5B55;--border:#D9D5CE}
+*{box-sizing:border-box}body{margin:0;padding:48px 16px;background:var(--background);color:var(--text);font:400 16px/24px "DM Sans",sans-serif}main{max-width:1048px;margin:auto}
+h1{font:700 40px/48px "DM Sans",sans-serif;margin:0 0 8px}p{margin:0;color:var(--text-muted)}.scroll{overflow-x:auto;margin:24px 0}svg{display:block;min-width:900px;width:100%;height:auto;font-family:"DM Sans",sans-serif}
+.b{fill:var(--surface);stroke:var(--text-muted)}.n{fill:none;stroke:var(--text-muted);stroke-dasharray:4 4}.n2{stroke:var(--text-muted);stroke-dasharray:4 4}.s,.p{fill:var(--primary);stroke:var(--text)}.d{fill:var(--surface);stroke:var(--text);stroke-width:1.5}
+.a{fill:none;stroke:var(--text);stroke-width:1.5}.t,.tp{font-size:15px;font-weight:600;fill:var(--text)}.m{font-size:14px;fill:var(--text-muted)}.tp2{font-size:14px;fill:var(--text)}.l{font-size:14px;font-weight:600;fill:var(--primary-text)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}h2{font:600 20px/28px "DM Sans",sans-serif;margin:0 0 8px}
+</style></head><body><main><h1>Emergency rules</h1><p>How PDG Flights decides what to show a stuck traveller. Based on rules.md.</p><div class="scroll"><svg viewBox="0 0 1020 1750" role="img" aria-label="Flowchart of the emergency rules, from the request to a chosen flight"><defs><marker id="h" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#1A1919"/></marker></defs><rect class="s" x="375.0" y="18.0" width="250" height="44" rx="22.0"/>
+<text class="tp" x="500" y="45" text-anchor="middle">Traveller&#x27;s request</text>
+<path class="a" d="M500 62V100" marker-end="url(#h)"/>
+<path class="d" d="M500 104L660 164L500 224L340 164Z"/>
+<text class="t" x="500" y="159" text-anchor="middle">Disruption</text>
+<text class="t" x="500" y="179" text-anchor="middle">or urgency?</text>
+<path class="a" d="M660 164H721" marker-end="url(#h)"/>
+<text class="l" x="680" y="156">No</text>
+<rect class="b" x="725.0" y="132.0" width="250" height="64" rx="12"/>
+<text class="t" x="850" y="159" text-anchor="middle">Not an emergency</text>
+<text class="m" x="850" y="179" text-anchor="middle">Other rules apply</text>
+<path class="a" d="M500 224V268" marker-end="url(#h)"/>
+<text class="l" x="508" y="250">Yes</text>
+<rect class="b" x="375.0" y="272.0" width="250" height="64" rx="12"/>
+<text class="t" x="500" y="299" text-anchor="middle">Emergency</text>
+<text class="m" x="500" y="319" text-anchor="middle">Wins over every other request</text>
+<path class="a" d="M500 336V374" marker-end="url(#h)"/>
+<path class="d" d="M500 378L660 438L500 498L340 438Z"/>
+<text class="t" x="500" y="433" text-anchor="middle">Do we know</text>
+<text class="t" x="500" y="453" text-anchor="middle">where they are?</text>
+<path class="a" d="M340 438H279" marker-end="url(#h)"/>
+<text class="l" x="300" y="430">No</text>
+<rect class="b" x="25.0" y="406.0" width="250" height="64" rx="12"/>
+<text class="t" x="150" y="433" text-anchor="middle">Ask where they are</text>
+<text class="m" x="150" y="453" text-anchor="middle">One question, tap or type</text>
+<path class="a" d="M150 406V304H371" marker-end="url(#h)"/>
+<text class="l" x="158" y="296">Answered</text>
+<path class="a" d="M500 498V542" marker-end="url(#h)"/>
+<text class="l" x="508" y="516">Yes</text>
+<path class="d" d="M500 546L660 606L500 666L340 606Z"/>
+<text class="t" x="500" y="601" text-anchor="middle">Destination</text>
+<text class="t" x="500" y="621" text-anchor="middle">given?</text>
+<path class="a" d="M660 606H686" marker-end="url(#h)"/>
+<text class="l" x="664" y="598">No</text>
+<path class="d" d="M850 546L1010 606L850 666L690 606Z"/>
+<text class="t" x="850" y="601" text-anchor="middle">Want the next</text>
+<text class="t" x="850" y="621" text-anchor="middle">available flight?</text>
+<path class="a" d="M850 666V702" marker-end="url(#h)"/>
+<text class="l" x="858" y="688">Yes</text>
+<rect class="b" x="725.0" y="706.0" width="250" height="64" rx="12"/>
+<text class="t" x="850" y="733" text-anchor="middle">To: Anywhere</text>
+<text class="m" x="850" y="753" text-anchor="middle">They can change it later</text>
+<path class="a" d="M850 546V482" marker-end="url(#h)"/>
+<text class="l" x="858" y="518">No</text>
+<rect class="b" x="725.0" y="418.0" width="250" height="64" rx="12"/>
+<text class="t" x="850" y="445" text-anchor="middle">Ask where to</text>
+<text class="m" x="850" y="465" text-anchor="middle">One question, tap or type</text>
+<path class="a" d="M725 450H680V532H503" marker-end="url(#h)"/>
+<text class="l" x="592" y="524">Answered</text>
+<path class="a" d="M500 666V706" marker-end="url(#h)"/>
+<text class="l" x="508" y="690">Yes</text>
+<rect class="b" x="375.0" y="706.0" width="250" height="64" rx="12"/>
+<text class="t" x="500" y="733" text-anchor="middle">When</text>
+<text class="m" x="500" y="753" text-anchor="middle">ASAP unless they said</text>
+<path class="a" d="M725 738H629" marker-end="url(#h)"/>
+<path class="a" d="M500 770V810" marker-end="url(#h)"/>
+<path class="d" d="M500 814L660 874L500 934L340 874Z"/>
+<text class="t" x="500" y="869" text-anchor="middle">Any flight they</text>
+<text class="t" x="500" y="889" text-anchor="middle">can make?</text>
+<text class="l" x="640" y="846"></text>
+<path class="a" d="M340 874H279" marker-end="url(#h)"/>
+<text class="l" x="300" y="866">No</text>
+<rect class="b" x="25.0" y="832.0" width="250" height="84" rx="12"/>
+<text class="t" x="150" y="859" text-anchor="middle">No flight works</text>
+<text class="m" x="150" y="879" text-anchor="middle">Other transport, hotels</text>
+<text class="m" x="150" y="899" text-anchor="middle">and safety advice</text>
+<rect class="n" x="725.0" y="832.0" width="250" height="84" rx="12"/>
+<text class="t" x="850" y="859" text-anchor="middle">What &quot;can make&quot; means</text>
+<text class="m" x="850" y="879" text-anchor="middle">Travel time + 45 min</text>
+<text class="m" x="850" y="899" text-anchor="middle">for check-in</text>
+<path class="n2" d="M660 874H725"/>
+<path class="a" d="M500 934V974" marker-end="url(#h)"/>
+<text class="l" x="508" y="958">Yes</text>
+<rect class="b" x="365.0" y="974.0" width="270" height="84" rx="12"/>
+<text class="t" x="500" y="1001" text-anchor="middle">Apply every need</text>
+<text class="m" x="500" y="1021" text-anchor="middle">Pet, wheelchair, group, budget</text>
+<text class="m" x="500" y="1041" text-anchor="middle">If none fit, say so</text>
+<path class="a" d="M500 1058V1098" marker-end="url(#h)"/>
+<path class="d" d="M500 1102L660 1162L500 1222L340 1162Z"/>
+<text class="t" x="500" y="1157" text-anchor="middle">Deadline</text>
+<text class="t" x="500" y="1177" text-anchor="middle">given?</text>
+<path class="a" d="M340 1162H279" marker-end="url(#h)"/>
+<text class="l" x="300" y="1154">Yes</text>
+<rect class="b" x="25.0" y="1140.0" width="250" height="44" rx="12"/>
+<text class="t" x="150" y="1167" text-anchor="middle">Earliest arrival first</text>
+<path class="a" d="M660 1162H721" marker-end="url(#h)"/>
+<text class="l" x="680" y="1154">No</text>
+<rect class="b" x="725.0" y="1140.0" width="250" height="44" rx="12"/>
+<text class="t" x="850" y="1167" text-anchor="middle">Soonest departure first</text>
+<path class="a" d="M150 1184V1262H366" marker-end="url(#h)"/>
+<path class="a" d="M850 1184V1262H634" marker-end="url(#h)"/>
+<rect class="b" x="365.0" y="1230.0" width="270" height="64" rx="12"/>
+<text class="t" x="500" y="1257" text-anchor="middle">Add status stamps</text>
+<text class="m" x="500" y="1277" text-anchor="middle">Next · Closest · Few seats · Cheapest</text>
+<path class="a" d="M500 1294V1334" marker-end="url(#h)"/>
+<rect class="p" x="350.0" y="1334.0" width="300" height="124" rx="12"/>
+<text class="tp" x="500" y="1361" text-anchor="middle">Show the plan</text>
+<text class="tp2" x="500" y="1381" text-anchor="middle">Warm note, then luggage-tag trip</text>
+<text class="tp2" x="500" y="1401" text-anchor="middle">Boarding pass</text>
+<text class="tp2" x="500" y="1421" text-anchor="middle">Airports and rebooking</text>
+<text class="tp2" x="500" y="1441" text-anchor="middle">Up to 2 backup tickets</text>
+<path class="a" d="M500 1458V1506" marker-end="url(#h)"/>
+<path class="d" d="M500 1510L660 1570L500 1630L340 1570Z"/>
+<text class="t" x="500" y="1565" text-anchor="middle">What do</text>
+<text class="t" x="500" y="1585" text-anchor="middle">they do?</text>
+<path class="a" d="M660 1570H721" marker-end="url(#h)"/>
+<text class="l" x="668" y="1562">Switch</text>
+<rect class="b" x="725.0" y="1538.0" width="250" height="64" rx="12"/>
+<text class="t" x="850" y="1565" text-anchor="middle">Backup becomes</text>
+<text class="m" x="850" y="1585" text-anchor="middle">the boarding pass</text>
+<path class="a" d="M340 1570H279" marker-end="url(#h)"/>
+<text class="l" x="284" y="1562">Change</text>
+<rect class="b" x="25.0" y="1538.0" width="250" height="64" rx="12"/>
+<text class="t" x="150" y="1565" text-anchor="middle">Edit a trip field</text>
+<text class="m" x="150" y="1585" text-anchor="middle">Work it out again</text>
+<path class="a" d="M25 1570H8V874" style="display:none"/>
+<text class="l" x="25" y="1636">Back to “Do we know where they are?”</text>
+<path class="a" d="M850 1538V1396H654" marker-end="url(#h)"/>
+<text class="l" x="690" y="1388">Shows again</text>
+<rect class="b" x="25.0" y="1674.0" width="250" height="64" rx="12"/>
+<text class="t" x="150" y="1701" text-anchor="middle">Can&#x27;t get there</text>
+<text class="m" x="150" y="1721" text-anchor="middle">Goes to “No flight works”</text>
+<path class="a" d="M440 1608L440 1660H150V1674" marker-end="url(#h)"/>
+<path class="a" d="M500 1630V1674" marker-end="url(#h)"/>
+<text class="l" x="508" y="1658">Choose</text>
+<rect class="p" x="350.0" y="1674.0" width="300" height="64" rx="12"/>
+<text class="tp" x="500" y="1701" text-anchor="middle">Flight chosen</text>
+<text class="tp2" x="500" y="1721" text-anchor="middle">Get directions, leave by the time</text></svg></div><h2>Always true</h2><div class="cards"><div class="card"><h2>Tone</h2><p>Warm throughout, short, times and actions first. No promises, no jokes.</p></div><div class="card"><h2>Safety</h2><p>Only set off if the road is safe. If officials say stay put, stay. Show the local emergency number. Never imply a seat is booked or held.</p></div><div class="card"><h2>Never</h2><p>Show a flight they can&#x27;t reach. Mark a flight in time when it misses the deadline. Drop a need silently.</p></div><div class="card"><h2>Look</h2><p>PDG Light. Status always has a word. Stamps never cover times, airports or prices. Nothing essential below 12px.</p></div></div></main></body></html>
