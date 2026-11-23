@@ -49,7 +49,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { background: var(--background); }
 body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--background); color: var(--text); font-family: var(--font-sans); }
-h1, h2, h3, p { margin: 0; }
+h1, h2, h3, h4, p { margin: 0; }
 :focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: 2px; }
 [hidden] { display: none !important; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -184,7 +184,7 @@ main { flex: 1; }
 *, *::before, *::after { box-sizing: border-box; }
 html { background: var(--background); }
 body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--background); color: var(--text); font-family: var(--font-sans); }
-h1, h2, h3, p { margin: 0; }
+h1, h2, h3, h4, p { margin: 0; }
 :focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: 2px; }
 [hidden] { display: none !important; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -374,18 +374,80 @@ button.known__chip:hover { border-color: var(--text-muted); }
 .trip__chip--need { border-style: dashed; }
 .trip__x { font-size: 16px; line-height: 1; color: var(--text-muted); }
 
-/* Plan card: the one way out, as ordered steps */
-.plan { border-color: var(--text); border-radius: var(--radius-4); gap: var(--space-4); }
-.plan__lead { display: flex; flex-direction: column; gap: var(--space-1); }
-.plan__steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
-.plan__steps li { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); }
-.plan__icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: var(--radius-2); background: var(--background); color: var(--text); }
-.plan__safe { display: flex; gap: var(--space-2); align-items: flex-start; padding: var(--space-3); border-radius: var(--radius-2); background: var(--background); }
-.plan__safe .icon { margin-top: 2px; }
-.plan .pdg-card__actions { margin-top: 0; }
-.plan .pdg-card__actions .price { margin-right: auto; }
+/* ---------- Emergency tickets (see rules.md) ---------- */
 .pdg-badge svg { width: 12px; height: 12px; flex: none; }
-@media (max-width: 520px) { .plan .pdg-card__actions { flex-direction: column; align-items: stretch; } }
+.label { font: 600 12px/16px var(--font-sans); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+
+/* Luggage tag: the trip, tap to change */
+.tag { position: relative; padding: var(--space-4) var(--space-5) var(--space-4) var(--space-7); background: var(--border); border-radius: 0 var(--radius-3) var(--radius-3) 0; clip-path: polygon(24px 0, 100% 0, 100% 100%, 24px 100%, 0 calc(100% - 24px), 0 24px); }
+.tag::before { content: ""; position: absolute; inset: var(--border-width); background: var(--surface); border-radius: 0 var(--radius-3) var(--radius-3) 0; clip-path: inherit; }
+.tag::after { content: ""; position: absolute; left: var(--space-4); top: 50%; width: 12px; height: 12px; margin-top: -6px; border: var(--border-width) solid var(--text-muted); border-radius: var(--radius-full); background: var(--background); }
+.tag > * { position: relative; z-index: 1; }
+.tag__fields { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
+.tag__field { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; padding: 0 var(--space-3); border: var(--border-width) dashed var(--text-muted); border-radius: var(--radius-1); background: var(--surface); color: var(--text); text-align: left; cursor: pointer; }
+.tag__field:hover { border-style: solid; border-color: var(--text); }
+.tag__field .icon { width: 14px; height: 14px; color: var(--primary-text); }
+
+/* Boarding pass: main part + fare stub, split by a perforation */
+.pass { display: grid; grid-template-columns: minmax(0, 1fr) 240px; overflow: hidden; background: var(--surface); border: var(--border-width) solid var(--border); border-radius: var(--radius-4); }
+.pass:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: 2px; }
+.pass__bar { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-5); background: var(--primary); color: var(--on-primary); }
+.pass__bar .label { color: inherit; }
+.pass__body { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-5); }
+.pass__codes { display: grid; grid-template-columns: auto minmax(24px, 96px) auto; align-items: start; gap: var(--space-3); justify-content: start; }
+.pass__code { display: block; font: 700 32px/40px var(--font-sans); }
+.pass__fly { display: flex; align-items: center; gap: var(--space-2); height: 40px; color: var(--primary-text); }
+.pass__fly::before { content: ""; flex: 1; border-top: 2px dotted var(--text-muted); }
+.pass__fly .icon { width: 20px; height: 20px; transform: rotate(8deg); }
+.pass__times { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: var(--space-3); margin: 0; padding-top: var(--space-4); border-top: var(--border-width) solid var(--border); }
+.pass__times dd { margin: 0; }
+.pass__way { display: flex; gap: var(--space-2); color: var(--text-muted); }
+.pass__way .icon { margin-top: 2px; }
+.pass__safe { display: flex; gap: var(--space-2); padding: var(--space-3); border-radius: var(--radius-2); background: var(--background); }
+.pass__safe .icon { margin-top: 2px; }
+.pass__more { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: auto; }
+.pass__stub, .ticket__stub { position: relative; border-left: var(--border-width) dashed var(--text-muted); }
+.pass__stub { display: flex; flex-direction: column; }
+.pass__stub::before, .pass__stub::after, .ticket__stub::before, .ticket__stub::after { content: ""; position: absolute; left: -10px; width: 18px; height: 18px; border: var(--border-width) solid var(--border); border-radius: var(--radius-full); background: var(--background); }
+.pass__stub::before, .ticket__stub::before { top: -10px; }
+.pass__stub::after, .ticket__stub::after { bottom: -10px; }
+.pass__stub .pass__body { flex: 1; }
+.pass__stub .price, .ticket .price { display: block; }
+.pass__price small { display: block; margin: 0; color: var(--text-muted); }
+.barcode { display: block; width: 100%; height: 48px; margin-top: auto; fill: var(--text); }
+.pass__stub .pdg-btn { width: 100%; }
+
+/* Stamps: status only */
+.stamps { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.stamp { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-1) var(--space-2); border: 2px solid currentColor; border-radius: var(--radius-1); outline: var(--border-width) solid currentColor; outline-offset: -5px; font: 700 12px/16px var(--font-sans); letter-spacing: .08em; text-transform: uppercase; padding: var(--space-2) var(--space-3); transform: rotate(-3deg); }
+.stamp:nth-child(even) { transform: rotate(2deg); }
+.stamp .icon { width: 14px; height: 14px; }
+.stamp--success { color: var(--success); }
+.stamp--primary { color: var(--primary-text); }
+.stamp--warning { color: var(--warning); }
+
+/* Slim ticket row: a backup flight */
+.ticket { display: grid; grid-template-columns: minmax(0, 1fr) auto; overflow: hidden; background: var(--surface); border: var(--border-width) solid var(--border); border-radius: var(--radius-3); }
+.ticket__main { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2) var(--space-4); padding: var(--space-4) var(--space-5); }
+.ticket__when { text-align: right; }
+.ticket__main .stamps { grid-column: 1 / -1; padding-top: var(--space-1); }
+.ticket__stub { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-5); }
+.ticket__stub .price small { display: block; margin: 0; }
+@media (max-width: 720px) {
+  .pass, .ticket { grid-template-columns: minmax(0, 1fr); }
+  .pass__stub, .ticket__stub { border-left: 0; border-top: var(--border-width) dashed var(--text-muted); }
+  .pass__stub::before, .ticket__stub::before { left: -10px; top: -10px; }
+  .pass__stub::after, .ticket__stub::after { left: auto; right: -10px; top: -10px; bottom: auto; }
+  .pass__stub .pass__bar { display: none; }
+  .pass__times { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ticket__stub { justify-content: space-between; }
+}
+@media (max-width: 520px) {
+  .pass__bar, .pass__body, .ticket__main, .ticket__stub { padding-left: var(--space-4); padding-right: var(--space-4); }
+  .pass__more .pdg-btn { flex: 1 1 100%; }
+  .ticket__main { grid-template-columns: minmax(0, 1fr); }
+  .ticket__when { text-align: left; }
+}
 
 /* Sort control on a group label */
 .group-label { align-items: flex-end; }
@@ -568,7 +630,7 @@ button.known__chip:hover { border-color: var(--text-muted); }
       '</div>' +
       '<div class="flight__bottom"><div class="flight__facts small">' + (f.facts || []).join('') + '</div>' +
         '<div class="flight__buy"><span class="price">£' + f.price + '<small>per person</small></span>' +
-        '<button class="pdg-btn ' + (f.primary ? 'pdg-btn--primary' : 'pdg-btn--secondary') + ' body" type="button"' + (f.pick != null ? ' data-pick="' + f.pick + '" aria-label="Switch to ' + esc(f.code) + ' to ' + esc(f.to[1]) + '">Switch to this' : '>Select') + '</button></div></div>' +
+        '<button class="pdg-btn ' + (f.primary ? 'pdg-btn--primary' : 'pdg-btn--secondary') + ' body" type="button">Select</button></div></div>' +
     '</article>';
   }
   function fact(icon, text) { return '<span>' + ic(icon) + text + '</span>'; }
@@ -634,29 +696,70 @@ button.known__chip:hover { border-color: var(--text-muted); }
   var B_WARN = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5l4.8 8.5H1.2z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M6 5v2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
   var B_NO = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
 
-  // PLAN CARD: the single fastest way out. Leave by → get to the airport → check-in closes → take off.
-  function planCard(f, o) {
-    var a = f.ap, closes = addMin(f.dep, -45), leave = addMin(closes, -a.driveMin), arr = addMin(f.dep, f.mins);
-    function step(icon, main, sub, time) {
-      return '<li><span class="plan__icon">' + ic(icon) + '</span><span class="list__main"><span class="body strong">' + main + '</span><span class="caption muted">' + sub + '</span></span><span class="h4">' + hm(time) + '</span></li>';
-    }
+  // TAG CARD: the trip as a luggage tag. Same data as the Trip card, for emergencies.
+  function tagCard(items, needs) {
+    var L = { from: 'From', to: 'To', date: 'When', pax: 'Who' };
+    return '<div class="tag"><p class="label">Your trip · tap to change</p><div class="tag__fields">' +
+      items.map(function (k) {
+        var v = k.text.replace(/^(From|To) /, ''); v = v.charAt(0).toUpperCase() + v.slice(1);
+        return '<button type="button" class="tag__field body" data-edit="' + k.slot + '"><span class="label">' + L[k.slot] + '</span>' + esc(v) + ic('pen') + '<span class="visually-hidden">, change</span></button>';
+      }).join('') +
+      (needs || []).map(function (n) { return '<button type="button" class="tag__field body" data-drop="' + n.id + '" aria-label="Remove ' + esc(n.text) + '"><span class="label">Need</span>' + esc(n.text) + '<span aria-hidden="true">×</span></button>'; }).join('') +
+    '</div></div>';
+  }
+
+  // STAMPS: status only, always with a word. list = ids from stampsOf in CASES.emergency.
+  var STAMPS = { next: ['success', 'zap', 'Next you can make'], closest: ['primary', 'pin', 'Closest airport'], few: ['warning', 'alert', 'Few seats left'], cheap: ['success', 'tag', 'Cheapest'] };
+  function stampRow(f) {
+    var st = (f.stamps || []).map(function (k) {
+      var x = STAMPS[k]; return '<span class="stamp stamp--' + x[0] + '">' + ic(x[1]) + (k === 'few' ? f.seats + ' seats left' : x[2]) + '</span>';
+    }).join('');
+    return st || (f.badges || []).length ? '<div class="stamps">' + (f.badges || []).join('') + st + '</div>' : '';
+  }
+  function barcode() {
+    var out = '', x = 0, w = [3, 1, 2, 1, 4, 1, 2, 3, 1, 1, 3, 2, 1, 4, 2, 1, 1, 3, 1, 2];
+    for (var i = 0; x < 200; i++) { var b = w[i % 20]; out += '<rect x="' + x + '" width="' + b + '" height="48"/>'; x += b + (i % 3 ? 2 : 3); }
+    return '<svg class="barcode" viewBox="0 0 200 48" preserveAspectRatio="none" aria-hidden="true">' + out + '</svg>';
+  }
+  function leaveBy(f) { return addMin(f.dep, -45 - f.ap.driveMin); }
+
+  // PASS CARD: the single best way out, as a boarding pass. Nothing is booked.
+  function passCard(f, o) {
+    var a = f.ap, arr = addMin(f.dep, f.mins), next = dayDiff(arr) > dayDiff(f.dep);
     var maps = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(a.name + ' airport ' + a.code);
     var directions = '<a class="pdg-btn pdg-btn--' + (o.chosen ? 'primary' : 'secondary') + ' body" target="_blank" rel="noopener" href="' + esc(maps) + '">' + ic('car') + 'Get directions</a>';
-    return '<article class="pdg-card plan" id="plan" tabindex="-1">' +
-      '<div class="row">' + (o.chosen ? badge('success', B_OK + 'Flight chosen') : badge('success', B_OK + o.label)) + badge(f.seats < 10 ? 'warning' : 'neutral', (f.seats < 10 ? B_WARN : '') + f.seats + ' seats left') + '</div>' +
-      '<div class="plan__lead"><h3 class="h3">Leave by ' + hm(leave) + ' for ' + esc(a.name) + '</h3>' +
-        '<p class="body muted">' + f.airline + ' ' + f.code + ' to ' + f.to[1] + ' · ' + (f.stops ? f.stops + ' stop' : 'Direct') + ' · ' + dur(f.mins) + '</p></div>' +
-      '<ol class="plan__steps">' +
-        step('car', 'Leave where you are', a.drive + ' by car or taxi' + (a.road ? ' on the ' + a.road : '') + (a.dist ? ' · ' + a.dist + ' ' + o.unit : ''), leave) +
-        step('clock', 'Check-in closes', 'Last moment to check in at ' + a.code, closes) +
-        step('plane', 'Take off', a.code + ' → ' + f.to[0] + ' · lands ' + hm(arr) + (dayDiff(arr) > dayDiff(f.dep) ? ' next day' : ''), f.dep) +
-      '</ol>' +
-      '<p class="plan__safe caption">' + ic('shield') + '<span>Only set off if the road is safe. If officials tell you to stay put, stay. In danger, call ' + o.sos + '.</span></p>' +
-      (o.chosen ? '<p class="caption muted">Nothing is booked or held. This is a workshop prototype.</p>' : '') +
-      '<div class="pdg-card__actions"><span class="price">£' + f.price + '<small>per person</small></span>' +
-        '<button class="pdg-btn pdg-btn--ghost body" type="button" data-unreachable>I can\'t get there</button>' + directions +
-        (o.chosen ? '' : '<button class="pdg-btn pdg-btn--primary body" type="button" data-pick="' + f.idx + '">Choose this flight</button>') + '</div>' +
-    '</article>';
+    function time(l, t, sup) { return '<div><dt class="label">' + l + '</dt><dd class="h4">' + hm(t) + (sup || '') + '</dd></div>'; }
+    return '<article class="pass plan" id="plan" tabindex="-1">' +
+      '<div><div class="pass__bar"><span class="label">' + (o.chosen ? 'Your chosen flight' : 'Your way out') + '</span><span class="label">' + f.airline + '</span></div>' +
+      '<div class="pass__body">' +
+        '<h3 class="h3">Leave by ' + hm(leaveBy(f)) + ' for ' + esc(a.name) + '</h3>' +
+        '<div class="pass__codes"><span><span class="pass__code">' + a.code + '</span><span class="caption muted">' + esc(a.name) + '</span></span>' +
+          '<span class="pass__fly">' + ic('plane') + '</span>' +
+          '<span><span class="pass__code">' + f.to[0] + '</span><span class="caption muted">' + esc(f.to[1]) + '</span></span></div>' +
+        stampRow(f) +
+        '<dl class="pass__times">' + time('Leave by', leaveBy(f)) + time('Check-in closes', addMin(f.dep, -45)) + time('Takes off', f.dep) + time('Lands', arr, next ? '<sup class="small"> +1<span class="visually-hidden"> day</span></sup>' : '') + '</dl>' +
+        '<p class="pass__way caption">' + ic('car') + '<span>' + a.drive + ' by car or taxi' + (a.road ? ' on the ' + esc(a.road) : '') + (a.dist ? ' · ' + a.dist + ' ' + o.unit : '') + '. Then ' + dur(f.mins) + ' in the air, ' + (f.stops ? f.stops + ' stop.' : 'direct.') + '</span></p>' +
+        '<p class="pass__safe caption">' + ic('shield') + '<span>Only set off if the road is safe. If officials tell you to stay put, stay. In danger, call ' + o.sos + '.</span></p>' +
+        '<div class="pass__more">' + (o.chosen ? '' : directions) + '<button class="pdg-btn pdg-btn--ghost body" type="button" data-unreachable>I can\'t get there</button></div>' +
+      '</div></div>' +
+      '<div class="pass__stub"><div class="pass__bar"><span class="label">Fare</span></div><div class="pass__body">' +
+        '<p class="price pass__price">£' + f.price + '<small>per person' + (o.pax > 1 ? ' · £' + f.price * o.pax + ' for ' + o.pax : '') + '</small></p>' +
+        '<div><p class="label">Flight</p><p class="body strong">' + f.code + '</p></div>' +
+        '<div><p class="label">Seats left</p><p class="body strong">' + f.seats + '</p></div>' +
+        barcode() +
+        (o.chosen ? directions : '<button class="pdg-btn pdg-btn--primary body" type="button" data-pick="' + f.idx + '">Choose this flight</button>') +
+        '<p class="small muted">Not a real ticket. Nothing is booked or held.</p>' +
+      '</div></div></article>';
+  }
+
+  // TICKET ROW: a backup flight, slim.
+  function ticketRow(f, o) {
+    var arr = addMin(f.dep, f.mins);
+    return '<article class="ticket"><div class="ticket__main">' +
+      '<div><h4 class="h4 ticket__title">' + esc(f.to[1]) + '</h4><p class="label">' + f.from[0] + ' → ' + f.to[0] + ' · ' + f.airline + ' ' + f.code + '</p><p class="caption muted">' + esc(f.from[1]) + ', ' + f.ap.drive + ' away · ' + f.seats + ' seats left</p></div>' +
+      '<div class="ticket__when"><p class="body strong">Leave by ' + hm(leaveBy(f)) + '</p><p class="caption muted">Check-in closes ' + hm(addMin(f.dep, -45)) + '</p><p class="caption muted">' + hm(f.dep) + ' → ' + hm(arr) + (dayDiff(arr) > dayDiff(f.dep) ? ' +1' : '') + ' · ' + dur(f.mins) + ' · ' + (f.stops ? f.stops + ' stop' : 'Direct') + '</p></div>' +
+      stampRow(f) + '</div>' +
+      '<div class="ticket__stub"><span class="price">£' + f.price + '<small>per person</small></span><button class="pdg-btn pdg-btn--secondary body" type="button" data-pick="' + f.idx + '" aria-label="Switch to ' + f.code + ' to ' + esc(f.to[1]) + '">Switch to this</button></div></article>';
   }
 
   // AIRPORTS CARD: every airport nearby, closest first, so it's clear why we picked the one we did.
@@ -858,7 +961,7 @@ button.known__chip:hover { border-color: var(--text-muted); }
     // Leaving now, every flight can still be made: drive + 45 min check-in + some slack.
     var flights = specs.map(function (x, i) {
       x.to = mkPlace(pool[i]); x.from = [x.ap.code, x.ap.name]; x.dep = soon(x.ap.driveMin + 45 + x.slack);
-      x.mins = flightMins(youK, pool[i]) + x.extra; x.idx = i; x.pick = i;
+      x.mins = flightMins(youK, pool[i]) + x.extra; x.idx = i;
       if (x.stops) x.via = pool[i] === 'amsterdam' ? 'CDG' : 'AMS';
       return x;
     }).sort(function (a, b) { return a.dep - b.dep; });
@@ -870,30 +973,26 @@ button.known__chip:hover { border-color: var(--text-muted); }
     var said = res.said.length ? ' ' + res.said.join(' ') : '';
     var first = flights[0], cheapest = flights.slice().sort(function (a, b) { return a.price - b.price; })[0];
     // Rule B: emergency wins, but respect "cheapest" among the flights they can make.
-    if (/\bcheap(est)?\b/.test(t)) {
-      cheapest.badges = [badge('success', B_OK + 'Cheapest you can make')].concat(cheapest.badges || []);
-      said += ' The cheapest one you can make is ' + cheapest.code + ' at £' + cheapest.price + '.';
-    }
+    if (/\bcheap(est)?\b/.test(t)) said += ' The cheapest one you can make is ' + cheapest.code + ' at £' + cheapest.price + '.';
+    var soonest = flights.slice().sort(function (a, b) { return a.dep - b.dep; })[0];
+    flights.forEach(function (f) {
+      f.stamps = [f === soonest && 'next', f.ap === a1 && a2 !== a1 && 'closest', f.seats < 10 && 'few', f === cheapest && flights.length > 1 && 'cheap'].filter(Boolean);
+    });
     var chosen = flights.filter(function (f) { return f.idx === ctx.pick; })[0];
     var top = chosen || first;
     var rest = flights.filter(function (f) { return f !== top; });
-    rest.forEach(function (f, i) {
-      f.order = i + 1;
-      f.badges = (f.badges || []).concat([badge('neutral', f.seats + ' seats left')]);
-      f.facts = [fact('car', 'Leave by ' + hm(addMin(f.dep, -45 - f.ap.driveMin)) + ', ' + f.ap.drive + ' away'), fact('clock', 'Check-in closes ' + hm(addMin(f.dep, -45)))].concat(f.facts || []);
-    });
     var cz = causeOf(t, n), shut = list.filter(function (a) { return !a.open; }).map(function (a) { return a.name; });
-    var lead = chosen ? 'You\'ve chosen ' + top.code + ' to ' + top.to[1] + '. Head for ' + top.ap.name + ' and leave by ' + hm(addMin(top.dep, -45 - top.ap.driveMin)) + '.' :
-      'I\'m sorry you\'re stuck. ' + a1.name + ' is the closest airport still flying, and ' + (opts.sorted ? 'this flight lands first' : 'this is the next flight you can get on') + (fixed ? ' to ' + cityName(sl.to) : '') + '.' +
-      (fixed ? '' : ' You didn\'t need a set destination, so I put leaving soonest first. Tap “To anywhere” to pick a place.') + said;
+    var lead = chosen ? 'Good choice, let\'s get you moving. Head for ' + top.ap.name + ' and leave by ' + hm(leaveBy(top)) + ' to catch ' + top.code + ' to ' + top.to[1] + '.' :
+      'I\'m sorry you\'re stuck. There is a way out: ' + (opts.sorted ? 'this flight lands first' : 'this is the next flight you can make') + (fixed ? ' to ' + cityName(sl.to) : '') + ', from ' + top.ap.name + '.' +
+      (fixed ? '' : ' I put leaving soonest first. Tap “To” to pick a place.') + said;
     var out = [
       aiNote(lead),
-      trip(sl),
-      planCard(top, { label: opts.sorted ? 'Lands first' : 'Next you can make', chosen: !!chosen, unit: unit, sos: n.sos || '999' }),
+      tagCard(tripItems(sl), needItems(sl.needs)),
+      passCard(top, { chosen: !!chosen, unit: unit, sos: n.sos || '999', pax: (sl.pax || {}).total || 1 }),
       airportsCard(list, { unit: unit, title: shut.length > 1 ? shut.length + ' airports have stopped flying' : shut[0] + ' has stopped flying', note: 'Because of ' + cz.why + '. ' + cz.body }),
       bookingCard()
     ];
-    if (rest.length) out = out.concat([groupLabel('If that one doesn\'t work', 'Other flights you can still make' + (opts.sorted ? '' : ', soonest first'), rest.length > 1 ? 'best' : null)]).concat(rest.map(function (x) { return flightCard(x); }));
+    if (rest.length) out = out.concat([groupLabel('If that one doesn\'t work for you', 'Take a breath. You can still make ' + (rest.length > 1 ? 'these too' : 'this one too') + '.')]).concat(rest.slice(0, 2).map(function (x) { return ticketRow(x); }));
     return out;
   };
 
@@ -916,8 +1015,8 @@ button.known__chip:hover { border-color: var(--text-muted); }
     var destK = CITIES[sl.to] && sl.to !== youK ? sl.to : dest.toLowerCase();
     var train = n.trains ? n.trains[destK] : 'Leaves 06:15 · Services resume at 06:00';
     return [
-      aiNote('There are no flights you can safely reach tonight. Here are other ways to travel, places to stay nearby and how to stay safe.'),
-      trip(sl),
+      aiNote('I\'m sorry, there are no flights you can safely reach tonight. Let\'s keep you comfortable until there are. Here are other ways to travel, places to stay nearby and how to stay safe.'),
+      tagCard(tripItems(sl), needItems(sl.needs)),
       statusCard({ type: 'error', icon: 'alert', badge: 'No flights tonight', title: 'You can\'t reach a flight tonight', body: n.home[1] + ' is closed and the ' + n.road + ' to ' + n.alt[1] + ' is shut because of fallen trees.' }),
       listCard({ icon: 'train', kicker: 'Other ways to travel', title: 'Earliest ways to ' + dest, items: [
         ['Coach to ' + n.alt[1] + ' airport', 'Leaves 06:40 · If the ' + n.road + ' reopens', '<span class="body strong">£12</span>'],
@@ -1251,7 +1350,7 @@ button.known__chip:hover { border-color: var(--text-muted); }
       },
       do: [
         'Ask where they are first, then where they need to get to. Keep each question to one tap.',
-        'Lead with one plan (Plan card): when to leave, which airport, when check-in closes. Then show the nearby airports, closest first, with which are open.',
+        'Lead with one plan (Pass card): when to leave, which airport, when check-in closes. Then show the nearby airports, closest first, with which are open.',
         'Sort flights by the soonest one they can actually make, including the trip to the airport. Speed beats price.',
         'We don\'t know their booking, so offer rebooking with the Booking card, without blocking the search.',
         'Only when no flight works: try another way to travel, find a hotel nearby, and say how to stay safe.'
@@ -1449,7 +1548,7 @@ button.known__chip:hover { border-color: var(--text-muted); }
     time: { NOW: NOW, soon: soon, at: at, hm: hm, dayLabel: dayLabel, until: until, addMin: addMin },
     cards: {
       aiNote: aiNote, groupLabel: groupLabel, flight: flightCard, highlight: highlightCard, status: statusCard,
-      airport: airportCard, booking: bookingCard, list: listCard, alert: alertCard, question: questionCard, suggest: suggestCard, trip: tripCard, plan: planCard, airports: airportsCard
+      airport: airportCard, booking: bookingCard, list: listCard, alert: alertCard, question: questionCard, suggest: suggestCard, trip: tripCard, pass: passCard, ticket: ticketRow, tag: tagCard, airports: airportsCard
     },
     CASES: CASES, RULES: RULES, ESSENTIALS: ESSENTIALS, LABELS: LABELS, EXAMPLES: EX, BRIEF: BRIEF,
     route: route, render: render, answerPhrase: answerPhrase, findCity: findCity,
